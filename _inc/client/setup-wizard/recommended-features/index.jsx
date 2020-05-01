@@ -18,6 +18,12 @@ const RecommendedFeatures = () => {
 				src={ imagePath + 'jetpack-new-heights.svg' }
 				alt={ __( 'A rocketship using Jetpack to reach new heights' ) }
 			/>
+			<h1>{ __( 'Get started with Jetpack’s powerful features' ) }</h1>
+			<p>
+				{ __(
+					"Jetpack has a lot of features so we've made a few recommendations for you below. You can change your feature settings at any time."
+				) }
+			</p>
 		</div>
 	);
 };
