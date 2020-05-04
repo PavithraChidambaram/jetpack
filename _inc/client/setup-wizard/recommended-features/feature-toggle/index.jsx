@@ -3,6 +3,7 @@
  */
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { FormToggle } from '@wordpress/components';
 
 import './style.scss';
 
@@ -22,6 +23,7 @@ export class FeatureToggle extends Component {
 
 		return (
 			<div className="jp-setup-wizard-feature-toggle">
+				<FormToggle />
 				<p>{ title }</p>
 				<p>{ details }</p>
 			</div>
