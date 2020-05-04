@@ -8,6 +8,7 @@ import { translate as __ } from 'i18n-calypso';
  * Internal dependencies
  */
 import { imagePath } from 'constants/urls';
+import { FeatureToggle } from './feature-toggle';
 
 import './style.scss';
 
@@ -24,6 +25,7 @@ const RecommendedFeatures = () => {
 					"Jetpack has a lot of features so we've made a few recommendations for you below. You can change your feature settings at any time."
 				) }
 			</p>
+			<FeatureToggle title={ __( 'Title' ) } details={ __( 'Details' ) }></FeatureToggle>
 		</div>
 	);
 };
