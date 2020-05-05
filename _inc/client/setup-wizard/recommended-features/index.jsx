@@ -25,7 +25,12 @@ const RecommendedFeatures = () => {
 					"Jetpack has a lot of features so we've made a few recommendations for you below. You can change your feature settings at any time."
 				) }
 			</p>
-			<FeatureToggle title={ __( 'Title' ) } details={ __( 'Details' ) }></FeatureToggle>
+			<FeatureToggle
+				title={ __( 'Daily or Real-time backups' ) }
+				details={ __(
+					'Never worry about experimenting, threats, or mistakes. Jetpack will back everything up and keep it safe in an offsite location, ready for you to restore your site in moments.'
+				) }
+			></FeatureToggle>
 		</div>
 	);
 };
