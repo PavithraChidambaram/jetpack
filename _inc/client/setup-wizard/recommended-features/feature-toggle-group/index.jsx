@@ -8,7 +8,6 @@ import React from 'react';
 /**
  * Internal dependencies
  */
-
 import { FeatureToggle } from '../feature-toggle';
 
 import './style.scss';
@@ -18,9 +17,15 @@ const FeatureToggleGroup = props => {
 		<div>
 			<h2>{ props.title }</h2>
 			<p>{ props.details }</p>
-			{ props.features.map( feature => {
-				return <FeatureToggle title={ feature.title } details={ feature.details } />;
-			} ) }
+			<div className="jp-setup-wizard-feature-toggle-group-toggles-area-container">
+				{ props.features.map( feature => {
+					return (
+						<div className="jp-setup-wizard-feature-toggle-group-toggle-container">
+							<FeatureToggle title={ feature.title } details={ feature.details } />
+						</div>
+					);
+				} ) }
+			</div>
 		</div>
 	);
 };
