@@ -12,7 +12,7 @@ import { FeatureToggleGroup } from './feature-toggle-group';
 import { imagePath } from 'constants/urls';
 import { fetchSettings, isFetchingSettingsList } from 'state/settings';
 
-import { recommendedFeatureGroups, featureToggleProps } from './feature-toggle-props';
+import { recommendedFeatureGroups, featureToggleProps } from './features-data';
 
 import './style.scss';
 
