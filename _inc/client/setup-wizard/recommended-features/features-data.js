@@ -186,17 +186,16 @@ const featureToggleData = {
 		details:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
-			return false;
+			return getSetting( state, 'wordads' );
 		},
 		moduleSlug: 'wordads',
 	},
-	// TODO: this one is always on, no option to toggle
 	'simple-payments-block': {
 		title: __( 'Simple Payments Block' ),
 		details:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
-			return false;
+			return true;
 		},
 	},
 	'beautiful-math': {
@@ -282,7 +281,7 @@ const featureGroups = {
 	testing: {
 		title: __( 'Testing' ),
 		details: __( 'Use this section for testing toggles' ),
-		features: [ 'subscriptions' ],
+		features: [ 'simple-payments-block' ],
 	},
 	security: {
 		title: __( 'Security' ),
