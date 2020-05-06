@@ -39,7 +39,7 @@ const FeatureToggle = props => {
 FeatureToggle.propTypes = {
 	title: PropTypes.string.isRequired,
 	details: PropTypes.string.isRequired,
-	checked: PropTypes.boolean.isRequired,
+	checked: PropTypes.bool.isRequired,
 	onChange: PropTypes.func.isRequired,
 };
 
