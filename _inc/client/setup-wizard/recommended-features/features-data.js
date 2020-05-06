@@ -63,7 +63,7 @@ const featureToggleData = {
 		details:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
-			return false;
+			return getSetting( state, 'monitor' );
 		},
 		moduleSlug: 'monitor',
 	},
@@ -277,6 +277,11 @@ const getFeatureToggleProps = state => {
 };
 
 const featureGroups = {
+	testing: {
+		title: __( 'Testing' ),
+		details: __( 'Use this section for testing toggles' ),
+		features: [ 'monitor' ],
+	},
 	security: {
 		title: __( 'Security' ),
 		details: __( 'Protect your site against data loss, malware, and malicious attacks.' ),
@@ -289,6 +294,10 @@ const featureGroups = {
 	},
 };
 
-const recommendedFeatureGroups = [ featureGroups.security, featureGroups.performance ];
+const recommendedFeatureGroups = [
+	featureGroups.testing,
+	featureGroups.security,
+	featureGroups.performance,
+];
 
 export { getFeatureToggleProps, recommendedFeatureGroups };
