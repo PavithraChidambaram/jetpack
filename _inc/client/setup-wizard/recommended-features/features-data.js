@@ -7,7 +7,7 @@ import { get } from 'lodash';
 /**
  * Internal dependencies
  */
-import { getVaultPressData } from 'state/at-a-glance';
+import { getVaultPressData, isAkismetKeyValid } from 'state/at-a-glance';
 import { getRewindStatus } from 'state/rewind';
 import { getSetting } from 'state/settings';
 
@@ -34,7 +34,10 @@ const featureToggleData = {
 		details:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
-			return false;
+			const vaultPressData = getVaultPressData( state );
+			const isScanEnabled = get( vaultPressData, [ 'data', 'features', 'security' ], false );
+
+			return true === isScanEnabled;
 		},
 		upgradeLink: '',
 	},
