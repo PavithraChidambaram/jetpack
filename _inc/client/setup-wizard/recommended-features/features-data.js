@@ -2,10 +2,13 @@
  * External dependencies
  */
 import { translate as __ } from 'i18n-calypso';
+import { get } from 'lodash';
 
 /**
  * Internal dependencies
  */
+import { getVaultPressData } from 'state/at-a-glance';
+import { getRewindStatus } from 'state/rewind';
 import { getSetting } from 'state/settings';
 
 const featureToggleData = {
@@ -15,7 +18,13 @@ const featureToggleData = {
 			'Never worry about experimenting, threats, or mistakes. Jetpack will back everything up and keep it safe in an offsite location, ready for you to restore your site in moments.'
 		),
 		getChecked: state => {
-			return false;
+			const vaultPressData = getVaultPressData( state );
+			const isVaultPressEnabled = get( vaultPressData, [ 'data', 'features', 'backups' ], false );
+
+			const rewindStatus = getRewindStatus( state );
+			const rewindState = get( rewindStatus, 'state', false );
+
+			return true === isVaultPressEnabled || 'active' === rewindState;
 		},
 		upgradeLink: '',
 		settingsLink: '',

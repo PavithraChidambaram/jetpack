@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
  * Internal dependencies
  */
 import QuerySite from 'components/data/query-site';
+import QueryRewindStatus from 'components/data/query-rewind-status';
+import QueryVaultPressData from 'components/data/query-vaultpress-data';
 import { getSiteTitle } from 'state/initial-state';
 
 import { IntroPage } from './intro-page';
@@ -22,6 +24,8 @@ const SetupWizardComponent = props => {
 	return (
 		<>
 			<QuerySite />
+			<QueryRewindStatus />
+			<QueryVaultPressData />
 			<Switch>
 				<Route exact path={ `${ path }` }>
 					<IntroPage siteTitle={ props.siteTitle } />
