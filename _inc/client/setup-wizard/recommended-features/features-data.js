@@ -207,13 +207,13 @@ const featureToggleData = {
 		},
 		moduleSlug: 'latex',
 	},
-	// TODO: how to handle sub toggle
+	// TODO: link to carousel settings
 	carousel: {
 		title: __( 'Carousel' ),
 		details:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
-			return false;
+			return getSetting( state, 'carousel' );
 		},
 		moduleSlug: 'carousel',
 	},
@@ -222,7 +222,7 @@ const featureToggleData = {
 		details:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
-			return false;
+			return getSetting( state, 'comment-likes' );
 		},
 		moduleSlug: 'comment-likes',
 	},
@@ -231,17 +231,15 @@ const featureToggleData = {
 		details:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
-			return false;
+			return getSetting( state, 'copy-post' );
 		},
-		moduleSlug: 'copy-post',
 	},
-	// TODO: this is on by default and cannot be easily turned off
 	'enhanced-distribution': {
 		title: __( 'Enhanced Distribution' ),
 		details:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
-			return false;
+			return true;
 		},
 	},
 	'extra-sidebar-widgets': {
@@ -249,17 +247,16 @@ const featureToggleData = {
 		details:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
-			return false;
+			return getSetting( state, 'widgets' );
 		},
 		moduleSlug: 'widgets',
 	},
-	// TODO: could not find an example for this
 	'tiled-galleries': {
 		title: __( 'Tiled Galleries' ),
 		details:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
-			return false;
+			return getSetting( state, 'tiled-gallery' );
 		},
 	},
 };
@@ -281,7 +278,13 @@ const featureGroups = {
 	testing: {
 		title: __( 'Testing' ),
 		details: __( 'Use this section for testing toggles' ),
-		features: [ 'beautiful-math' ],
+		features: [
+			'comment-likes',
+			'copy-post',
+			'enhanced-distribution',
+			'extra-sidebar-widgets',
+			'tiled-galleries',
+		],
 	},
 	security: {
 		title: __( 'Security' ),
