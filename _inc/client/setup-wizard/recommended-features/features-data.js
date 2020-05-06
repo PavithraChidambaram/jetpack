@@ -131,12 +131,13 @@ const featureToggleData = {
 			return getSetting( state, 'notes' );
 		},
 	},
+	// TODO: does this need to have an external link to connect accounts?
 	publicize: {
 		title: __( 'Publicize' ),
 		details:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
-			return false;
+			return getSetting( state, 'publicize' );
 		},
 		moduleSlug: 'publicize',
 	},
@@ -146,7 +147,7 @@ const featureToggleData = {
 		details:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
-			return false;
+			return getSetting( state, 'related-posts' );
 		},
 		moduleSlug: 'related-posts',
 	},
@@ -280,7 +281,7 @@ const featureGroups = {
 	testing: {
 		title: __( 'Testing' ),
 		details: __( 'Use this section for testing toggles' ),
-		features: [ 'notifications' ],
+		features: [ 'related-posts' ],
 	},
 	security: {
 		title: __( 'Security' ),
