@@ -160,12 +160,13 @@ const featureToggleData = {
 		},
 		moduleSlug: 'sharedaddy',
 	},
+	// TODO: does this need external link for setting up verification?
 	'site-verification': {
 		title: __( 'Site Verification' ),
 		details:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
-			return false;
+			return getSetting( state, 'verification-tools' );
 		},
 		moduleSlug: 'verification-tools',
 	},
@@ -281,7 +282,7 @@ const featureGroups = {
 	testing: {
 		title: __( 'Testing' ),
 		details: __( 'Use this section for testing toggles' ),
-		features: [ 'sharing' ],
+		features: [ 'site-verification' ],
 	},
 	security: {
 		title: __( 'Security' ),
