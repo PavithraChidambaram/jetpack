@@ -12,7 +12,7 @@ import { FeatureToggleGroup } from './feature-toggle-group';
 import { imagePath } from 'constants/urls';
 import { fetchSettings, isFetchingSettingsList } from 'state/settings';
 
-import { recommendedFeatureGroups, features } from './features';
+import { recommendedFeatureGroups, featureToggleProps } from './feature-toggle-props';
 
 import './style.scss';
 
@@ -42,7 +42,7 @@ class RecommendedFeatures extends Component {
 						<FeatureToggleGroup
 							title={ featureGroup.title }
 							details={ featureGroup.details }
-							features={ featureGroup.features.map( key => features[ key ] ) }
+							features={ featureGroup.features.map( key => featureToggleProps[ key ] ) }
 						/>
 					);
 				} ) }

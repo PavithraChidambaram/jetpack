@@ -3,7 +3,7 @@
  */
 import { translate as __ } from 'i18n-calypso';
 
-const features = {
+const featureToggleProps = {
 	backups: {
 		title: __( 'Daily or Real-time backups' ),
 		details: __(
@@ -183,4 +183,4 @@ const featureGroups = {
 
 const recommendedFeatureGroups = [ featureGroups.security, featureGroups.performance ];
 
-export { features, recommendedFeatureGroups };
+export { featureToggleProps, recommendedFeatureGroups };
