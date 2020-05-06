@@ -5,6 +5,7 @@ import { FormToggle } from '@wordpress/components';
 import { translate as __ } from 'i18n-calypso';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 /**
  * Internal dependencies
@@ -13,7 +14,7 @@ import Button from 'components/button';
 
 import './style.scss';
 
-export class FeatureToggle extends Component {
+class FeatureToggle extends Component {
 	static propTypes = {
 		title: PropTypes.string.isRequired,
 		details: PropTypes.string.isRequired,
@@ -47,3 +48,5 @@ export class FeatureToggle extends Component {
 		);
 	}
 }
+
+export { FeatureToggle };
