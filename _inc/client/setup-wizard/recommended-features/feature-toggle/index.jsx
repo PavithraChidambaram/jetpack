@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { FormToggle } from '@wordpress/components';
+import classnames from 'classnames';
 import { translate as __ } from 'i18n-calypso';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -10,11 +11,12 @@ import React from 'react';
  * Internal dependencies
  */
 import Button from 'components/button';
+import Gridicon from 'components/gridicon';
 
 import './style.scss';
 
 const FeatureToggle = props => {
-	const { title, details, checked } = props;
+	const { title, details, checked, isPaid = false } = props;
 
 	function onToggleChange() {
 		props.onToggleChange( checked );
@@ -22,7 +24,12 @@ const FeatureToggle = props => {
 
 	return (
 		<div className="jp-setup-wizard-feature-toggle">
-			<div className="jp-setup-wizard-form-toggle-container">
+			<div
+				className={ classnames( 'jp-setup-wizard-form-toggle-container', {
+					'is-paid-feature': isPaid,
+				} ) }
+			>
+				<Gridicon icon="star" />
 				<FormToggle checked={ checked } onChange={ onToggleChange } />
 			</div>
 			<div className="jp-setup-wizard-feature-toggle-content-container">

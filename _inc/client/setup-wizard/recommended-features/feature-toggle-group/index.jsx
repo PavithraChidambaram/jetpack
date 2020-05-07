@@ -25,12 +25,7 @@ let FeatureToggleGroup = props => {
 				{ features.map( feature => {
 					return (
 						<div className="jp-setup-wizard-feature-toggle-group-toggle-container">
-							<FeatureToggle
-								title={ feature.title }
-								details={ feature.details }
-								checked={ feature.checked }
-								onToggleChange={ feature.onToggleChange }
-							/>
+							<FeatureToggle { ...feature } />
 						</div>
 					);
 				} ) }

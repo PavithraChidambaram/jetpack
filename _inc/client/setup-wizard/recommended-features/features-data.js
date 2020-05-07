@@ -32,6 +32,7 @@ const featureToggleData = {
 				return dispatch();
 			};
 		},
+		isPaid: true,
 		upgradeLink: '',
 		settingsLink: '',
 	},
@@ -51,6 +52,7 @@ const featureToggleData = {
 				return dispatch();
 			};
 		},
+		isPaid: true,
 		upgradeLink: '',
 	},
 	'brute-force-protect': {
@@ -65,6 +67,7 @@ const featureToggleData = {
 				return dispatch( updateSettings( { protect: ! currentCheckedValue } ) );
 			};
 		},
+		isPaid: true,
 		moduleSlug: 'protect',
 	},
 	'anti-spam': {
@@ -78,6 +81,7 @@ const featureToggleData = {
 			// TODO
 			return () => {};
 		},
+		isPaid: true,
 	},
 	monitor: {
 		title: __( 'Monitor' ),
@@ -121,6 +125,7 @@ const featureToggleData = {
 				return dispatch( updateSettings( { search: ! currentCheckedValue } ) );
 			};
 		},
+		isPaid: true,
 		moduleSlug: 'search',
 	},
 	// TODO: infinite-scroll needs a way to toggle between its 3 options, maybe just set it to a default
@@ -169,6 +174,7 @@ const featureToggleData = {
 				return dispatch( updateSettings( { videopress: ! currentCheckedValue } ) );
 			};
 		},
+		isPaid: true,
 		moduleSlug: 'videopress',
 	},
 	// TODO: what should this one be? No settings to toggle.
@@ -286,6 +292,7 @@ const featureToggleData = {
 				return dispatch( updateSettings( { wordads: ! currentCheckedValue } ) );
 			};
 		},
+		isPaid: true,
 		moduleSlug: 'wordads',
 	},
 	// TODO: disable toggle
@@ -301,6 +308,7 @@ const featureToggleData = {
 				return () => {};
 			};
 		},
+		isPaid: true,
 	},
 	// TODO: link to carousel settings
 	carousel: {
@@ -395,6 +403,7 @@ const getFeatureToggleState = state => {
 			title: featureToggle.title,
 			details: featureToggle.details,
 			checked: featureToggle.getChecked( state ),
+			isPaid: featureToggle.isPaid,
 		};
 	}
 	return featuresData;

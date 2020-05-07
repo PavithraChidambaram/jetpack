@@ -6,6 +6,8 @@
 	justify-content: center;
 
 	padding: 0 2rem;
+
+	position: relative;
 }
 
 .jp-setup-wizard-feature-toggle {
@@ -45,4 +47,33 @@
 
 .dops-button {
 	width: 150px;
+}
+
+.jp-setup-wizard-form-toggle-container {
+	.gridicons-star {
+		display: none;
+	}
+
+	&.is-paid-feature {
+		&::before {
+			content: '';
+			width: 0px;
+			height: 0px;
+			border-top: 35px solid #4ab866;
+			border-right: 35px solid transparent;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+		.gridicons-star {
+			display: block;
+			color: white;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 18px;
+			height: 18px;
+		}
+	}
 }
