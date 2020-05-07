@@ -29,6 +29,7 @@ let FeatureToggleGroup = props => {
 								title={ feature.title }
 								details={ feature.details }
 								checked={ feature.checked }
+								onToggleChange={ feature.onToggleChange }
 							/>
 						</div>
 					);

@@ -12,7 +12,11 @@ import { FeatureToggleGroup } from './feature-toggle-group';
 import { imagePath } from 'constants/urls';
 import { fetchSettings, isFetchingSettingsList } from 'state/settings';
 
-import { recommendedFeatureGroups, getFeatureToggleProps } from './features-data';
+import {
+	recommendedFeatureGroups,
+	getFeatureToggleState,
+	getFeatureToggleDispatch,
+} from './features-data';
 
 import './style.scss';
 
@@ -42,7 +46,10 @@ class RecommendedFeatures extends Component {
 						<FeatureToggleGroup
 							title={ featureGroup.title }
 							details={ featureGroup.details }
-							features={ featureGroup.features.map( key => this.props.featureToggleProps[ key ] ) }
+							features={ featureGroup.features.map( key => ( {
+								...this.props.featureToggleState[ key ],
+								...this.props.featureToggleDispatch[ key ],
+							} ) ) }
 						/>
 					);
 				} ) }
@@ -54,10 +61,11 @@ class RecommendedFeatures extends Component {
 RecommendedFeatures = connect(
 	state => ( {
 		isFetchingSettingsList: isFetchingSettingsList( state ),
-		featureToggleProps: getFeatureToggleProps( state ),
+		featureToggleState: getFeatureToggleState( state ),
 	} ),
 	dispatch => ( {
 		fetchSettings: () => dispatch( fetchSettings() ),
+		featureToggleDispatch: getFeatureToggleDispatch( dispatch ),
 	} )
 )( RecommendedFeatures );
 

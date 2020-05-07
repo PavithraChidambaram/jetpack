@@ -14,12 +14,16 @@ import Button from 'components/button';
 import './style.scss';
 
 const FeatureToggle = props => {
-	const { title, details, checked, onChange } = props;
+	const { title, details, checked } = props;
+
+	function onToggleChange() {
+		props.onToggleChange( checked );
+	}
 
 	return (
 		<div className="jp-setup-wizard-feature-toggle">
 			<div className="jp-setup-wizard-form-toggle-container">
-				<FormToggle checked={ checked } onChange={ onChange } />
+				<FormToggle checked={ checked } onChange={ onToggleChange } />
 			</div>
 			<div className="jp-setup-wizard-feature-toggle-content-container">
 				<p className="jp-setup-wizard-feature-toggle-content">

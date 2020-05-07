@@ -9,7 +9,7 @@ import { get } from 'lodash';
  */
 import { getVaultPressData, isAkismetKeyValid } from 'state/at-a-glance';
 import { getRewindStatus } from 'state/rewind';
-import { getSetting } from 'state/settings';
+import { getSetting, updateSettings } from 'state/settings';
 
 const featureToggleData = {
 	backups: {
@@ -26,6 +26,12 @@ const featureToggleData = {
 
 			return true === isVaultPressEnabled || 'active' === rewindState;
 		},
+		getOnToggleChange: dispatch => {
+			// TODO: make this navigate appropriately.
+			return currentCheckedValue => {
+				return dispatch();
+			};
+		},
 		upgradeLink: '',
 		settingsLink: '',
 	},
@@ -39,6 +45,12 @@ const featureToggleData = {
 
 			return true === isScanEnabled;
 		},
+		getOnToggleChange: dispatch => {
+			// TODO: make this navigate appropriately.
+			return currentCheckedValue => {
+				return dispatch();
+			};
+		},
 		upgradeLink: '',
 	},
 	'brute-force-protect': {
@@ -47,6 +59,11 @@ const featureToggleData = {
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
 			return getSetting( state, 'protect' );
+		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { protect: ! currentCheckedValue } ) );
+			};
 		},
 		moduleSlug: 'protect',
 	},
@@ -57,6 +74,10 @@ const featureToggleData = {
 		getChecked: state => {
 			return true === isAkismetKeyValid( state );
 		},
+		getOnToggleChange: dispatch => {
+			// TODO
+			return () => {};
+		},
 	},
 	monitor: {
 		title: __( 'Monitor' ),
@@ -65,14 +86,25 @@ const featureToggleData = {
 		getChecked: state => {
 			return getSetting( state, 'monitor' );
 		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { monitor: ! currentCheckedValue } ) );
+			};
+		},
 		moduleSlug: 'monitor',
 	},
+	// TODO: site-accelerator might also need to activate photon
 	'site-accelerator': {
 		title: __( 'Site Accelerator' ),
 		details:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
 			return getSetting( state, 'photon-cdn' );
+		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { 'photon-cdn': ! currentCheckedValue } ) );
+			};
 		},
 		moduleSlug: 'photon-cdn',
 	},
@@ -82,6 +114,12 @@ const featureToggleData = {
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
 			return getSetting( state, 'search' );
+		},
+		// TODO: make sure this is handled better when the plan level is too low.
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { search: ! currentCheckedValue } ) );
+			};
 		},
 		moduleSlug: 'search',
 	},
@@ -93,6 +131,15 @@ const featureToggleData = {
 		getChecked: state => {
 			return !! getSetting( state, 'infinite-scroll' );
 		},
+		// TODO: add deep link configuration
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				if ( currentCheckedValue ) {
+					return dispatch( updateSettings( { 'infinite-scroll': false } ) );
+				}
+				return dispatch( updateSettings( { 'infinite-scroll': true, infinite_scroll: true } ) );
+			};
+		},
 		moduleSlug: 'infinite-scroll',
 	},
 	// TODO: turn this into something that toggles an appropriate set of defaults.
@@ -103,13 +150,24 @@ const featureToggleData = {
 		getChecked: state => {
 			return getSetting( state, 'stats' );
 		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { stats: ! currentCheckedValue } ) );
+			};
+		},
 	},
+	// TODO: feature gating by plan
 	videopress: {
 		title: __( 'VideoPress' ),
 		details:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
 			return getSetting( state, 'videopress' );
+		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { videopress: ! currentCheckedValue } ) );
+			};
 		},
 		moduleSlug: 'videopress',
 	},
@@ -121,6 +179,11 @@ const featureToggleData = {
 		getChecked: state => {
 			return getSetting( state, 'contact-form' );
 		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { 'contact-form': ! currentCheckedValue } ) );
+			};
+		},
 	},
 	// TODO: what should this one be? No settings to toggle.
 	notifications: {
@@ -129,6 +192,11 @@ const featureToggleData = {
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
 			return getSetting( state, 'notes' );
+		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { notes: ! currentCheckedValue } ) );
+			};
 		},
 	},
 	// TODO: does this need to have an external link to connect accounts?
@@ -139,15 +207,25 @@ const featureToggleData = {
 		getChecked: state => {
 			return getSetting( state, 'publicize' );
 		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { publicize: ! currentCheckedValue } ) );
+			};
+		},
 		moduleSlug: 'publicize',
 	},
-	// TODO: how to handle the other two sub toggles?
+	// TODO: are defaults for the sub toggles on this okay?
 	'related-posts': {
 		title: __( 'Related posts' ),
 		details:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
 			return getSetting( state, 'related-posts' );
+		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { 'related-posts': ! currentCheckedValue } ) );
+			};
 		},
 		moduleSlug: 'related-posts',
 	},
@@ -158,9 +236,14 @@ const featureToggleData = {
 		getChecked: state => {
 			return getSetting( state, 'sharedaddy' );
 		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { sharedaddy: ! currentCheckedValue } ) );
+			};
+		},
 		moduleSlug: 'sharedaddy',
 	},
-	// TODO: does this need external link for setting up verification?
+	// TODO: add external link for setting up verification
 	'site-verification': {
 		title: __( 'Site Verification' ),
 		details:
@@ -168,9 +251,14 @@ const featureToggleData = {
 		getChecked: state => {
 			return getSetting( state, 'verification-tools' );
 		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { 'verification-tools': ! currentCheckedValue } ) );
+			};
+		},
 		moduleSlug: 'verification-tools',
 	},
-	// TODO: how to handle the other two sub toggles?
+	// TODO: verify that defaults for the sub toggles are okay
 	subscriptions: {
 		title: __( 'Subscriptions' ),
 		details:
@@ -178,9 +266,14 @@ const featureToggleData = {
 		getChecked: state => {
 			return getSetting( state, 'subscriptions' );
 		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { subscriptions: ! currentCheckedValue } ) );
+			};
+		},
 		moduleSlug: 'subscriptions',
 	},
-	// TODO: how to handle the many sub toggles?
+	// TODO: verify that defaults for the sub toggles are okay
 	ads: {
 		title: __( 'Ads' ),
 		details:
@@ -188,8 +281,14 @@ const featureToggleData = {
 		getChecked: state => {
 			return getSetting( state, 'wordads' );
 		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { wordads: ! currentCheckedValue } ) );
+			};
+		},
 		moduleSlug: 'wordads',
 	},
+	// TODO: disable toggle
 	'simple-payments-block': {
 		title: __( 'Simple Payments Block' ),
 		details:
@@ -197,15 +296,11 @@ const featureToggleData = {
 		getChecked: state => {
 			return true;
 		},
-	},
-	'beautiful-math': {
-		title: __( 'Beautiful Math' ),
-		details:
-			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
-		getChecked: state => {
-			return getSetting( state, 'latex' );
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return () => {};
+			};
 		},
-		moduleSlug: 'latex',
 	},
 	// TODO: link to carousel settings
 	carousel: {
@@ -214,6 +309,11 @@ const featureToggleData = {
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
 			return getSetting( state, 'carousel' );
+		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { carousel: ! currentCheckedValue } ) );
+			};
 		},
 		moduleSlug: 'carousel',
 	},
@@ -224,6 +324,11 @@ const featureToggleData = {
 		getChecked: state => {
 			return getSetting( state, 'comment-likes' );
 		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { 'comment-likes': ! currentCheckedValue } ) );
+			};
+		},
 		moduleSlug: 'comment-likes',
 	},
 	'copy-post': {
@@ -233,13 +338,23 @@ const featureToggleData = {
 		getChecked: state => {
 			return getSetting( state, 'copy-post' );
 		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { 'copy-post': ! currentCheckedValue } ) );
+			};
+		},
 	},
 	'enhanced-distribution': {
 		title: __( 'Enhanced Distribution' ),
 		details:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
-			return true;
+			return getSetting( state, 'enhanced-distribution' );
+		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { 'enhanced-distribution': ! currentCheckedValue } ) );
+			};
 		},
 	},
 	'extra-sidebar-widgets': {
@@ -248,6 +363,11 @@ const featureToggleData = {
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.',
 		getChecked: state => {
 			return getSetting( state, 'widgets' );
+		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { widgets: ! currentCheckedValue } ) );
+			};
 		},
 		moduleSlug: 'widgets',
 	},
@@ -258,10 +378,16 @@ const featureToggleData = {
 		getChecked: state => {
 			return getSetting( state, 'tiled-gallery' );
 		},
+		getOnToggleChange: dispatch => {
+			return currentCheckedValue => {
+				return dispatch( updateSettings( { 'tiled-gallery': ! currentCheckedValue } ) );
+			};
+		},
 	},
 };
 
-const getFeatureToggleProps = state => {
+// TODO: Rewrite this with a map call.
+const getFeatureToggleState = state => {
 	const featuresData = {};
 	for ( const key in featureToggleData ) {
 		const featureToggle = featureToggleData[ key ];
@@ -274,34 +400,67 @@ const getFeatureToggleProps = state => {
 	return featuresData;
 };
 
+// TODO: Rewrite this with a map call.
+const getFeatureToggleDispatch = dispatch => {
+	const featureToggleDispatch = {};
+	for ( const key in featureToggleData ) {
+		const featureToggle = featureToggleData[ key ];
+		featureToggleDispatch[ key ] = {
+			onToggleChange: featureToggle.getOnToggleChange( dispatch ),
+		};
+	}
+	return featureToggleDispatch;
+};
+
 const featureGroups = {
-	testing: {
-		title: __( 'Testing' ),
-		details: __( 'Use this section for testing toggles' ),
+	security: {
+		title: __( 'Security' ),
+		details: __( 'Protect your site against data loss, malware, and malicious attacks.' ),
+		features: [ 'backups', 'scan', 'anti-spam', 'brute-force-protect', 'monitor' ],
+	},
+	performance: {
+		title: __( 'Performance' ),
+		details: __( 'Load pages faster, optimize images, and speed up your visitors’ experience.' ),
+		features: [ 'site-accelerator', 'search', 'infinite-scroll', 'site-stats', 'videopress' ],
+	},
+	marketing: {
+		title: __( 'Marketing' ),
+		details: __(
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.'
+		),
 		features: [
+			'contact-form',
 			'comment-likes',
+			'notifications',
+			'publicize',
+			'related-posts',
+			'sharing',
+			'site-verification',
+			'subscriptions',
+			'ads',
+			'simple-payments-block',
+		],
+	},
+	publishing: {
+		title: __( 'Design & Publishing' ),
+		details: __(
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam urna, tempus quis pellentesque et, facilisis vel nibh. Orci varius.'
+		),
+		features: [
+			'carousel',
 			'copy-post',
 			'enhanced-distribution',
 			'extra-sidebar-widgets',
 			'tiled-galleries',
 		],
 	},
-	security: {
-		title: __( 'Security' ),
-		details: __( 'Protect your site against data loss, malware, and malicious attacks.' ),
-		features: [ 'backups', 'scan', 'brute-force-protect', 'anti-spam' ],
-	},
-	performance: {
-		title: __( 'Performance' ),
-		details: __( 'Load pages faster, optimize images, and speed up your visitors’ experience.' ),
-		features: [ 'site-accelerator', 'search' ],
-	},
 };
 
 const recommendedFeatureGroups = [
-	featureGroups.testing,
 	featureGroups.security,
 	featureGroups.performance,
+	featureGroups.marketing,
+	featureGroups.publishing,
 ];
 
-export { getFeatureToggleProps, recommendedFeatureGroups };
+export { getFeatureToggleState, getFeatureToggleDispatch, recommendedFeatureGroups };
