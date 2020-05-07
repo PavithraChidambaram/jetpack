@@ -309,6 +309,7 @@ const featureToggleData = {
 			};
 		},
 		isPaid: true,
+		isDisabled: true,
 	},
 	// TODO: link to carousel settings
 	carousel: {
@@ -404,6 +405,7 @@ const getFeatureToggleState = state => {
 			details: featureToggle.details,
 			checked: featureToggle.getChecked( state ),
 			isPaid: featureToggle.isPaid,
+			isDisabled: featureToggle.isDisabled,
 		};
 	}
 	return featuresData;

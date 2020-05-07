@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { FormToggle } from '@wordpress/components';
+import { Disabled, FormToggle } from '@wordpress/components';
 import classnames from 'classnames';
 import { translate as __ } from 'i18n-calypso';
 import PropTypes from 'prop-types';
@@ -16,11 +16,13 @@ import Gridicon from 'components/gridicon';
 import './style.scss';
 
 const FeatureToggle = props => {
-	const { title, details, checked, isPaid = false } = props;
+	const { title, details, checked, isPaid = false, isDisabled = false } = props;
 
 	function onToggleChange() {
 		props.onToggleChange( checked );
 	}
+
+	const formToggle = <FormToggle checked={ checked } onChange={ onToggleChange } />;
 
 	return (
 		<div className="jp-setup-wizard-feature-toggle">
@@ -30,7 +32,7 @@ const FeatureToggle = props => {
 				} ) }
 			>
 				<Gridicon icon="star" />
-				<FormToggle checked={ checked } onChange={ onToggleChange } />
+				{ isDisabled ? <Disabled>{ formToggle }</Disabled> : formToggle }
 			</div>
 			<div className="jp-setup-wizard-feature-toggle-content-container">
 				<p className="jp-setup-wizard-feature-toggle-content">
