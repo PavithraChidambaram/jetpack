@@ -10,11 +10,10 @@ import { connect } from 'react-redux';
  * Internal dependencies
  */
 import { FeatureToggle } from '../feature-toggle';
-import { updateSettings } from 'state/settings';
 
 import './style.scss';
 
-let FeatureToggleGroup = props => {
+const FeatureToggleGroup = props => {
 	const { title, details, features } = props;
 
 	return (
@@ -39,14 +38,5 @@ FeatureToggleGroup.propTypes = {
 	details: PropTypes.string.isRequired,
 	features: PropTypes.array.isRequired,
 };
-
-FeatureToggleGroup = connect(
-	state => ( {} ),
-	dispatch => ( {
-		updateOptions: ( newOptions, messages = {} ) => {
-			return dispatch( updateSettings( newOptions, messages ) );
-		},
-	} )
-)( FeatureToggleGroup );
 
 export { FeatureToggleGroup };
