@@ -16,10 +16,33 @@ import Gridicon from 'components/gridicon';
 import './style.scss';
 
 const FeatureToggle = props => {
-	const { title, details, checked, upgradeLink, isPaid = false, isDisabled = false } = props;
+	const {
+		title,
+		details,
+		checked,
+		configureLink,
+		upgradeLink,
+		isPaid = false,
+		isDisabled = false,
+	} = props;
 
 	function onToggleChange() {
 		props.onToggleChange( checked );
+	}
+
+	let buttonContent;
+	if ( upgradeLink ) {
+		buttonContent = (
+			<Button href={ upgradeLink } primary>
+				{ __( 'Upgrade now' ) }
+			</Button>
+		);
+	} else if ( checked && configureLink ) {
+		buttonContent = (
+			<Button href={ configureLink } target="_blank">
+				{ __( 'Configure' ) }
+			</Button>
+		);
 	}
 
 	const formToggle = <FormToggle checked={ checked } onChange={ onToggleChange } />;
@@ -40,13 +63,7 @@ const FeatureToggle = props => {
 					{ details }
 				</p>
 			</div>
-			<div className="jp-setup-wizard-feature-toggle-button-container">
-				{ upgradeLink && (
-					<Button href={ upgradeLink } primary>
-						{ __( 'Upgrade now' ) }
-					</Button>
-				) }
-			</div>
+			<div className="jp-setup-wizard-feature-toggle-button-container">{ buttonContent }</div>
 		</div>
 	);
 };

@@ -2,12 +2,14 @@
  * External dependencies
  */
 import { translate as __ } from 'i18n-calypso';
+import getRedirectUrl from 'lib/jp-redirect';
 import { get } from 'lodash';
 
 /**
  * Internal dependencies
  */
 import { getVaultPressData, isAkismetKeyValid } from 'state/at-a-glance';
+import { getSiteRawUrl } from 'state/initial-state';
 import { getRewindStatus } from 'state/rewind';
 import { getSetting, updateSettings } from 'state/settings';
 
@@ -242,6 +244,10 @@ const featureToggleData = {
 				return dispatch( updateSettings( { publicize: ! currentCheckedValue } ) );
 			};
 		},
+		getConfigureLink: state => {
+			const siteRawUrl = getSiteRawUrl( state );
+			return getRedirectUrl( 'calypso-marketing-connections', { site: siteRawUrl } );
+		},
 		moduleSlug: 'publicize',
 	},
 	// TODO: are defaults for the sub toggles on this okay?
@@ -438,6 +444,10 @@ const getFeatureToggleState = state => {
 			upgradeLink:
 				'function' === typeof featureToggle.getUpgradeLink
 					? featureToggle.getUpgradeLink( state )
+					: null,
+			configureLink:
+				'function' === typeof featureToggle.getConfigureLink
+					? featureToggle.getConfigureLink( state )
 					: null,
 		};
 	}
