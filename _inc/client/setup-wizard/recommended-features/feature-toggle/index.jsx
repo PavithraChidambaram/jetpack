@@ -19,6 +19,7 @@ const FeatureToggle = props => {
 	const {
 		title,
 		details,
+		info,
 		checked,
 		configureLink,
 		upgradeLink,
@@ -45,6 +46,11 @@ const FeatureToggle = props => {
 		);
 	}
 
+	let infoContent;
+	if ( info ) {
+		infoContent = <p>{ info }</p>;
+	}
+
 	const formToggle = <FormToggle checked={ checked } onChange={ onToggleChange } />;
 
 	return (
@@ -63,7 +69,10 @@ const FeatureToggle = props => {
 					{ details }
 				</p>
 			</div>
-			<div className="jp-setup-wizard-feature-toggle-button-container">{ buttonContent }</div>
+			<div className="jp-setup-wizard-feature-toggle-button-container">
+				{ buttonContent }
+				{ infoContent }
+			</div>
 		</div>
 	);
 };
@@ -71,6 +80,7 @@ const FeatureToggle = props => {
 FeatureToggle.propTypes = {
 	title: PropTypes.string.isRequired,
 	details: PropTypes.string.isRequired,
+	info: PropTypes.string,
 	checked: PropTypes.bool.isRequired,
 	onChange: PropTypes.func.isRequired,
 	upgradeLink: PropTypes.string,

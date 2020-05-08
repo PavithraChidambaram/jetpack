@@ -338,6 +338,9 @@ const featureToggleData = {
 				return () => {};
 			};
 		},
+		getInfo: state => {
+			return __( 'Always on' );
+		},
 		isPaid: true,
 		getIsDisabled: state => {
 			return true;
@@ -435,6 +438,7 @@ const getFeatureToggleState = state => {
 		featuresData[ key ] = {
 			title: featureToggle.title,
 			details: featureToggle.details,
+			info: 'function' === typeof featureToggle.getInfo ? featureToggle.getInfo( state ) : null,
 			checked: featureToggle.getChecked( state ),
 			isPaid: featureToggle.isPaid,
 			isDisabled:
