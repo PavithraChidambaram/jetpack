@@ -41,6 +41,9 @@ const featureToggleData = {
 
 			return true === isVaultPressEnabled || 'active' === rewindState;
 		},
+		getUpgradeLink: state => {
+			return '#/plans';
+		},
 		isPaid: true,
 		upgradeLink: '',
 		settingsLink: '',
@@ -431,6 +434,10 @@ const getFeatureToggleState = state => {
 			isDisabled:
 				'function' === typeof featureToggle.getIsDisabled
 					? featureToggle.getIsDisabled( state )
+					: null,
+			upgradeLink:
+				'function' === typeof featureToggle.getUpgradeLink
+					? featureToggle.getUpgradeLink( state )
 					: null,
 		};
 	}
