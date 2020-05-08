@@ -32,6 +32,15 @@ const featureToggleData = {
 				return dispatch();
 			};
 		},
+		getIsDisabled: state => {
+			const vaultPressData = getVaultPressData( state );
+			const isVaultPressEnabled = get( vaultPressData, [ 'data', 'features', 'backups' ], false );
+
+			const rewindStatus = getRewindStatus( state );
+			const rewindState = get( rewindStatus, 'state', false );
+
+			return true === isVaultPressEnabled || 'active' === rewindState;
+		},
 		isPaid: true,
 		upgradeLink: '',
 		settingsLink: '',
@@ -51,6 +60,12 @@ const featureToggleData = {
 			return currentCheckedValue => {
 				return dispatch();
 			};
+		},
+		getIsDisabled: state => {
+			const vaultPressData = getVaultPressData( state );
+			const isScanEnabled = get( vaultPressData, [ 'data', 'features', 'security' ], false );
+
+			return true === isScanEnabled;
 		},
 		isPaid: true,
 		upgradeLink: '',
@@ -80,6 +95,9 @@ const featureToggleData = {
 		getOnToggleChange: dispatch => {
 			// TODO
 			return () => {};
+		},
+		getIsDisabled: state => {
+			return true === isAkismetKeyValid( state );
 		},
 		isPaid: true,
 	},
@@ -124,6 +142,9 @@ const featureToggleData = {
 			return currentCheckedValue => {
 				return dispatch( updateSettings( { search: ! currentCheckedValue } ) );
 			};
+		},
+		getIsDisabled: state => {
+			return getSetting( state, 'search' );
 		},
 		isPaid: true,
 		moduleSlug: 'search',
@@ -295,7 +316,7 @@ const featureToggleData = {
 		isPaid: true,
 		moduleSlug: 'wordads',
 	},
-	// TODO: disable toggle
+	// TODO: make an upgrade if it isn't paid for?
 	'simple-payments-block': {
 		title: __( 'Simple Payments Block' ),
 		details:
@@ -309,7 +330,9 @@ const featureToggleData = {
 			};
 		},
 		isPaid: true,
-		isDisabled: true,
+		getIsDisabled: state => {
+			return true;
+		},
 	},
 	// TODO: link to carousel settings
 	carousel: {
@@ -405,7 +428,10 @@ const getFeatureToggleState = state => {
 			details: featureToggle.details,
 			checked: featureToggle.getChecked( state ),
 			isPaid: featureToggle.isPaid,
-			isDisabled: featureToggle.isDisabled,
+			isDisabled:
+				'function' === typeof featureToggle.getIsDisabled
+					? featureToggle.getIsDisabled( state )
+					: null,
 		};
 	}
 	return featuresData;
