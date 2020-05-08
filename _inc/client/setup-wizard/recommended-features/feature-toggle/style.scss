@@ -46,7 +46,9 @@
 	padding: 0 2rem;
 
 	p {
+		font-size: 0.5rem;
 		font-style: italic;
+		text-align: right;
 		color: lighten( $gray, 10% );
 	}
 }

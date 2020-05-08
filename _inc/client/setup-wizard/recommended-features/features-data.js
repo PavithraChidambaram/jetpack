@@ -8,10 +8,12 @@ import { get } from 'lodash';
 /**
  * Internal dependencies
  */
+import { getPlanClass } from 'lib/plans/constants';
 import { getVaultPressData, isAkismetKeyValid } from 'state/at-a-glance';
 import { getSiteRawUrl } from 'state/initial-state';
 import { getRewindStatus } from 'state/rewind';
 import { getSetting, updateSettings } from 'state/settings';
+import { getSitePlan } from 'state/site';
 
 const featureToggleData = {
 	backups: {
@@ -44,11 +46,20 @@ const featureToggleData = {
 			return true === isVaultPressEnabled || 'active' === rewindState;
 		},
 		getUpgradeLink: state => {
-			return '#/plans';
+			const sitePlan = getSitePlan( state );
+			const planClass = getPlanClass( sitePlan.product_slug );
+			if ( 'is-free-plan' === planClass ) {
+				return '#/plans';
+			}
+		},
+		getInfo: state => {
+			const sitePlan = getSitePlan( state );
+			const planClass = getPlanClass( sitePlan.product_slug );
+			if ( 'is-free-plan' !== planClass ) {
+				return __( `Included with ${ sitePlan.product_name }` );
+			}
 		},
 		isPaid: true,
-		upgradeLink: '',
-		settingsLink: '',
 	},
 	scan: {
 		title: __( 'Security scanning' ),

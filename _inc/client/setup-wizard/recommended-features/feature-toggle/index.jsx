@@ -10,6 +10,7 @@ import React from 'react';
 /**
  * Internal dependencies
  */
+import { getPlanClass } from 'lib/plans/constants';
 import Button from 'components/button';
 import Gridicon from 'components/gridicon';
 
@@ -32,7 +33,7 @@ const FeatureToggle = props => {
 	}
 
 	let buttonContent;
-	if ( upgradeLink ) {
+	if ( ! checked && upgradeLink ) {
 		buttonContent = (
 			<Button href={ upgradeLink } primary>
 				{ __( 'Upgrade now' ) }
