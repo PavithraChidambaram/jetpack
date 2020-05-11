@@ -6,17 +6,19 @@ import classnames from 'classnames';
 import { translate as __ } from 'i18n-calypso';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 
 /**
  * Internal dependencies
  */
-import { getPlanClass } from 'lib/plans/constants';
 import Button from 'components/button';
 import Gridicon from 'components/gridicon';
 
+import { mapStateToFeatureToggleProps, mapDispatchToFeatureToggleProps } from '../features-data';
+
 import './style.scss';
 
-const FeatureToggle = props => {
+let FeatureToggle = props => {
 	const {
 		title,
 		details,
@@ -86,5 +88,14 @@ FeatureToggle.propTypes = {
 	onChange: PropTypes.func.isRequired,
 	upgradeLink: PropTypes.string,
 };
+
+FeatureToggle = connect(
+	( state, ownProps ) => {
+		return { ...mapStateToFeatureToggleProps( state, ownProps.feature ) };
+	},
+	( dispatch, ownProps ) => {
+		return { ...mapDispatchToFeatureToggleProps( dispatch, ownProps.feature ) };
+	}
+)( FeatureToggle );
 
 export { FeatureToggle };

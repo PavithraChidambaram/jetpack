@@ -46,10 +46,7 @@ class RecommendedFeatures extends Component {
 						<FeatureToggleGroup
 							title={ featureGroup.title }
 							details={ featureGroup.details }
-							features={ featureGroup.features.map( key => ( {
-								...this.props.featureToggleState[ key ],
-								...this.props.featureToggleDispatch[ key ],
-							} ) ) }
+							features={ featureGroup.features }
 						/>
 					);
 				} ) }

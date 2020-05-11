@@ -4,7 +4,6 @@
 import { translate as __ } from 'i18n-calypso';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
 
 /**
  * Internal dependencies
@@ -24,7 +23,8 @@ const FeatureToggleGroup = props => {
 				{ features.map( feature => {
 					return (
 						<div className="jp-setup-wizard-feature-toggle-group-toggle-container">
-							<FeatureToggle { ...feature } />
+							{ /* <FeatureToggle { ...feature } /> */ }
+							<FeatureToggle feature={ feature } />
 						</div>
 					);
 				} ) }
